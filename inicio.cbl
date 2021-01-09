@@ -10,7 +10,9 @@
        FILE SECTION.
        WORKING-STORAGE SECTION.
        PROCEDURE DIVISION.
-       MAIN-PROCEDURE.
-            DISPLAY "Hello world"
-            STOP RUN.
+       PEIMER-RUTINA.
+            DISPLAY "Hello world".
+       SEGUNDA-RUTINA.
+           DISPLAY "Hello world 2"
+           STOP RUN.
        END PROGRAM INICIO.
