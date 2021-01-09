@@ -38,6 +38,8 @@
            03  CLI_ALT_2.
                05 CLI_CATEGORIA_2  PIC X.
                05 CLI_NOMBRE_2     PIC X(80).
+           03  CLI_RAZONSOCIAL     PIC X(60).
+           03  FILLER              PIC X(240).
 
 
 
@@ -48,6 +50,7 @@
        PROCEDURE DIVISION.
        PEIMER-RUTINA.
            PERFORM ABRO-ARCHIVO.
+           PERFORM GRABO-DATOS.
            PERFORM CIERRE-ARCHIVO.
            STOP RUN.
 
@@ -56,6 +59,15 @@
            OPEN I-O CLIENTES.
            IF ST-FILE > "07"
                DISPLAY "Error abriendo el archivo".
+       GRABO-DATOS.
+
+           INITIALIZE  REG-CLIENTES.
+           MOVE 1 TO  CLI-ID.
+           MOVE 0 TO  CLI-SALDO.
+           MOVE "CAMILO" TO CLI_NOMBRE.
+           MOVE "DIRECCION" TO CLI_DIRECCION.
+
+
 
        CIERRE-ARCHIVO.
            CLOSE CLIENTES.
