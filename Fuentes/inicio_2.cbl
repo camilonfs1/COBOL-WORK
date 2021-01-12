@@ -5,7 +5,7 @@
       * Tectonics: cobc
       ******************************************************************
        IDENTIFICATION DIVISION.
-       PROGRAM-ID. INICIO.
+       PROGRAM-ID. INICIO_2.
 
        ENVIRONMENT DIVISION.
        CONFIGURATION SECTION.
@@ -44,12 +44,16 @@
        WORKING-STORAGE SECTION.
 
        01  ST-FILE PIC XX.
+       01  X       PIC X.
+
+       77  BANDERA PIC 9.
+       01  SALDO-Z PIC Z(6)9,99 .
 
        PROCEDURE DIVISION.
        PEIMER-RUTINA.
            PERFORM ABRO-ARCHIVO.
            PERFORM GRABO-DATOS THRU F-GRABO-DATOS.
-           PERFORM CIERRE-ARCHIVO.
+           PERFORM CIERRO-ARCHIVOS.
            STOP RUN.
 
        ABRO-ARCHIVO.
@@ -70,11 +74,30 @@
            IF ST-FILE = "99" GO TO GRABO-DATOS.
            IF ST-FILE > "07"
                DISPLAY "Error grabando archivo".
+               ACCEPT X.
 
        F-GRABO-DATOS.
            EXIT.
 
-       CIERRE-ARCHIVO.
+       LEO-DATOS.
+           INITIALIZE REG-CLIENTES.
+           START CLIENTES KEY IS  NOT LESS THAN ID-CLIENTE.
+           READ CLIENTES NEXT RECORD.
+           IF ST-FILE = "99" GO TO LEO-DATOS.
+           IF ST-FILE > "07" AND ST-FILE < "99"
+               DISPLAY "Error leyendo archivo".
+       MUESTRO-DATOS.
+           MOVE CLI-SALDO TO SALDO-Z.
+           DISPLAY "MOSTRANDO".
+           DISPLAY CLI-ID          LINE 10 COL 30.
+           DISPLAY SALDO-Z         LINE 11 COL 30.
+           DISPLAY CLI_NOMBRE      LINE 12 COL 30.
+           DISPLAY CLI_DIRECCION   LINE 13 COL 30.
+           ACCEPT X                LINE 14 COL 70.
+
+       F-LEO-DATOS.
+           EXIT.
+       CIERRO-ARCHIVOS.
            CLOSE CLIENTES.
 
-       END PROGRAM INICIO.
+       END PROGRAM INICIO_2.
